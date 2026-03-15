@@ -64,6 +64,9 @@ const Navbar = ({ lang, setLang }: { lang: 'en' | 'zh', setLang: (l: 'en' | 'zh'
         <a href="#comparison" className="hover:text-white transition-colors">
           {lang === 'en' ? 'Comparison' : '对比'}
         </a>
+        <a href="#pricing" className="hover:text-white transition-colors">
+          {lang === 'en' ? 'Pricing' : '价格'}
+        </a>
         <a href="#stories" className="hover:text-white transition-colors">
           {lang === 'en' ? 'Stories' : '用户故事'}
         </a>
@@ -308,6 +311,116 @@ const Comparison = ({ lang }: { lang: 'en' | 'zh' }) => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Pricing = ({ lang }: { lang: 'en' | 'zh' }) => {
+  const tiers = [
+    {
+      name: 'Free',
+      price: '$0',
+      period: '',
+      desc: lang === 'en' ? 'Perfect for trying out CiCy.' : '适合体验 CiCy。',
+      cta: lang === 'en' ? 'Get Started' : '免费开始',
+      features: [
+        lang === 'en' ? '3 desktop apps' : '3 个桌面应用',
+        lang === 'en' ? '5 plugin connections' : '5 个插件连接',
+        lang === 'en' ? '50 AI calls/day' : '每天 50 次 AI 调用',
+        lang === 'en' ? 'Community support' : '社区支持'
+      ]
+    },
+    {
+      name: 'Pro',
+      price: '$9.9',
+      period: lang === 'en' ? '/month' : '/月',
+      desc: lang === 'en' ? 'For power users and creators.' : '适合重度用户和创作者。',
+      popular: true,
+      cta: lang === 'en' ? 'Subscribe' : '立即订阅',
+      features: [
+        lang === 'en' ? 'Unlimited apps' : '无限桌面应用',
+        lang === 'en' ? 'Unlimited plugins' : '无限插件连接',
+        lang === 'en' ? '500 AI calls/day' : '每天 500 次 AI 调用',
+        lang === 'en' ? 'Priority response' : '优先响应支持',
+        lang === 'en' ? 'Electron desktop app' : 'Electron 桌面端应用'
+      ]
+    },
+    {
+      name: 'Team',
+      price: '$29.9',
+      period: lang === 'en' ? '/month per seat' : '/月/席位',
+      desc: lang === 'en' ? 'For teams building together.' : '适合团队协作构建。',
+      cta: lang === 'en' ? 'Subscribe' : '立即订阅',
+      features: [
+        lang === 'en' ? 'Everything in Pro' : '包含 Pro 版所有功能',
+        lang === 'en' ? 'Team collaboration' : '团队协作',
+        lang === 'en' ? 'Admin dashboard' : '管理员控制台',
+        lang === 'en' ? 'SSO/LDAP' : 'SSO/LDAP 单点登录',
+        lang === 'en' ? 'Unlimited AI calls' : '无限 AI 调用'
+      ]
+    }
+  ];
+
+  return (
+    <section id="pricing" className="py-24 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
+            {lang === 'en' ? 'Simple, transparent pricing' : '简单透明的定价'}
+          </h2>
+          <p className="text-xl text-white/60">
+            {lang === 'en' ? 'Choose the plan that works best for you.' : '选择最适合您的方案。'}
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {tiers.map((tier, i) => (
+            <div 
+              key={i} 
+              className={`relative p-8 rounded-[2rem] bg-white/5 backdrop-blur-xl flex flex-col transition-transform hover:-translate-y-2 ${
+                tier.popular 
+                  ? 'border-2 border-emerald-500 shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)]' 
+                  : 'border border-white/10'
+              }`}
+            >
+              {tier.popular && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-black text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
+                  {lang === 'en' ? 'Most Popular' : '最受欢迎'}
+                </div>
+              )}
+              <div className="mb-8">
+                <h3 className="text-xl font-medium text-white/80 mb-2">{tier.name}</h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-5xl font-bold">{tier.price}</span>
+                  <span className="text-white/40 font-medium">{tier.period}</span>
+                </div>
+                <p className="text-white/60 text-sm mt-4">{tier.desc}</p>
+              </div>
+              
+              <ul className="space-y-4 mb-8 flex-1">
+                {tier.features.map((feat, j) => (
+                  <li key={j} className="flex items-start gap-3 text-white/90">
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check size={12} className="text-emerald-400" />
+                    </div>
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              <button 
+                className={`w-full py-4 rounded-xl font-bold transition-all ${
+                  tier.popular 
+                    ? 'bg-emerald-500 text-black hover:bg-emerald-400 hover:scale-[1.02]' 
+                    : 'bg-white/10 text-white hover:bg-white/20'
+                }`}
+              >
+                {tier.cta}
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -598,6 +711,7 @@ export default function App() {
       <Hero lang={lang} />
       <HowItWorks lang={lang} />
       <Comparison lang={lang} />
+      <Pricing lang={lang} />
       <UserStory lang={lang} />
       <GetStartedSection lang={lang} />
       <Waitlist lang={lang} />
