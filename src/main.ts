@@ -12,6 +12,54 @@ langToggleBtn?.addEventListener('click', () => {
   document.documentElement.lang = currentLang === 'en' ? 'zh' : 'en';
 });
 
+// Pricing Toggle
+const toggleMonthly = document.getElementById('toggle-monthly');
+const toggleYearly = document.getElementById('toggle-yearly');
+const toggleBg = document.getElementById('toggle-bg');
+const priceValues = document.querySelectorAll('.price-value');
+const pricePeriods = document.querySelectorAll('.price-period');
+const yearlyBadges = document.querySelectorAll('.yearly-badge');
+
+if (toggleMonthly && toggleYearly && toggleBg) {
+  toggleMonthly.addEventListener('click', () => {
+    toggleMonthly.classList.replace('text-white/60', 'text-white');
+    toggleYearly.classList.replace('text-white', 'text-white/60');
+    toggleBg.style.transform = 'translateX(0)';
+    toggleBg.style.width = '100px';
+    
+    priceValues.forEach(el => {
+      el.textContent = el.getAttribute('data-monthly');
+    });
+    pricePeriods.forEach(el => {
+      if (el.classList.contains('en')) {
+        el.textContent = el.textContent?.includes('seat') ? '/month per seat' : '/month';
+      } else {
+        el.textContent = el.textContent?.includes('席位') ? '/月/席位' : '/月';
+      }
+    });
+    yearlyBadges.forEach(el => el.classList.add('hidden'));
+  });
+
+  toggleYearly.addEventListener('click', () => {
+    toggleYearly.classList.replace('text-white/60', 'text-white');
+    toggleMonthly.classList.replace('text-white', 'text-white/60');
+    toggleBg.style.transform = 'translateX(100px)'; 
+    toggleBg.style.width = '140px';
+    
+    priceValues.forEach(el => {
+      el.textContent = el.getAttribute('data-yearly');
+    });
+    pricePeriods.forEach(el => {
+      if (el.classList.contains('en')) {
+        el.textContent = el.textContent?.includes('seat') ? '/year per seat' : '/year';
+      } else {
+        el.textContent = el.textContent?.includes('席位') ? '/年/席位' : '/年';
+      }
+    });
+    yearlyBadges.forEach(el => el.classList.remove('hidden'));
+  });
+}
+
 // Typing Animation
 const typingEl = document.getElementById('typing-text');
 if (typingEl) {
